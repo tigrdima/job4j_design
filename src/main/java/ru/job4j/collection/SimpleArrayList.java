@@ -20,7 +20,9 @@ public class SimpleArrayList<T> implements List<T> {
     }
 
     private void sizeArray(int size) {
-        if (container.length == 0 || size == container.length) {
+        if (container.length == 0) {
+            container = Arrays.copyOf(container, 1);
+        } else if (container.length == size) {
             container = Arrays.copyOf(container, container.length * 2);
         }
     }
