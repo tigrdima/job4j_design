@@ -16,13 +16,13 @@ public class ForwardLinkedTest {
         linked.add(1);
         linked.deleteFirst();
         linked.iterator().next();
-
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = NoSuchElementException.class)
     public void whenDeleteEmptyLinked() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
         linked.deleteFirst();
+
     }
 
     @Test
