@@ -16,6 +16,7 @@ public class ForwardLinkedTest {
         linked.add(1);
         linked.deleteFirst();
         linked.iterator().next();
+
     }
 
     @Test(expected = NullPointerException.class)
