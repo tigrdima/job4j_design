@@ -19,30 +19,27 @@ public class SimpleArrayList<T> implements List<T> {
         size++;
     }
 
-    @Override
-    public void sizeArray(int size) {
-        if (size == container.length) {
+    private void sizeArray(int size) {
+        if (container.length == 0 || size == container.length) {
             container = Arrays.copyOf(container, container.length * 2);
         }
     }
 
     @Override
     public T set(int index, T newValue) {
-        Objects.checkIndex(index, size);
-        modCount++;
-        T oldValue =  container[index];
+        T oldValue =  get(index);
         container[index] = newValue;
+        modCount++;
         return oldValue;
     }
 
     @Override
     public T remove(int index) {
-        Objects.checkIndex(index, size);
-        modCount++;
-        T oldValue = container[index];
+        T oldValue = get(index);
         System.arraycopy(container, index + 1, container, index, container.length - index - 1);
-        container[size() - 1] = null;
+        container[size - 1] = null;
         size--;
+        modCount++;
         return oldValue;
     }
 
@@ -59,7 +56,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
             int index = 0;
             int expectedModCount = modCount;
 
