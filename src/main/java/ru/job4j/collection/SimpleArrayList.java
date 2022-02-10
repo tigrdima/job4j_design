@@ -13,17 +13,15 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public void add(T value) {
-        modCount++;
         sizeArray(size);
         container[size] = value;
         size++;
+        modCount++;
     }
 
     private void sizeArray(int size) {
-        if (container.length == 0) {
-            container = Arrays.copyOf(container, 1);
-        } else if (container.length == size) {
-            container = Arrays.copyOf(container, container.length * 2);
+        if (container.length == size) {
+           container = Arrays.copyOf(container, (container.length + 1) * 2);
         }
     }
 
