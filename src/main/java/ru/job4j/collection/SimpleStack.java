@@ -1,8 +1,7 @@
 package ru.job4j.collection;
 
 public class SimpleStack<T> {
-    private ForwardLinked<T> linked = new ForwardLinked<T>();
-    private int size;
+    private ForwardLinked<T> linked = new ForwardLinked<>();
 
    public T pop() {
         return linked.deleteFirst();
@@ -14,5 +13,9 @@ public class SimpleStack<T> {
 
     public int size() {
        return linked.size();
+    }
+
+    public boolean isEmpty() {
+       return linked.isEmpty();
     }
 }
