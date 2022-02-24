@@ -8,16 +8,21 @@ public class SimpleQueue<T> {
     private int size;
 
     public T poll() {
-        if (in.isEmpty()) {
-            throw new NoSuchElementException();
+
+        if (in.isEmpty() && out.isEmpty()) {
+           throw new NoSuchElementException();
         }
         if (out.isEmpty()) {
-           while (!in.isEmpty()) {
-               out.push(in.pop());
-           }
-       }
-        size--;
-       return !out.isEmpty() ? out.pop() : null;
+            while (!in.isEmpty()) {
+                out.push(in.pop());
+            }
+        }
+        T rsl = null;
+        if (!out.isEmpty()) {
+                rsl = out.pop();
+                size--;
+            }
+        return rsl;
     }
 
     public void push(T value) {
