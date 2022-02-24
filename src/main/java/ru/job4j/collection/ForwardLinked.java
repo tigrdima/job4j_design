@@ -5,34 +5,28 @@ import java.util.NoSuchElementException;
 
 public class ForwardLinked<T> implements Iterable<T> {
     private Node<T> head;
-    Node<T> tail;
+    private Node<T> prev;
     private int size;
-    private  int index;
 
     public void add(T value) {
         Node<T> node = new Node<>(value, null);
-        size++;
+
         if (head == null) {
             head = node;
             return;
         }
 
-        tail = head;
+        Node<T> tail = head;
         while (tail.next != null) {
             tail = tail.next;
         }
         tail.next = node;
+        size++;
     }
 
     public void addFirst(T value) {
-        Node<T> node = new Node<>(value, null);
+        head = new Node<>(value, head);
         size++;
-        if (head == null) {
-            head = node;
-            return;
-        }
-        node.next = head;
-        head = node;
     }
 
     public T deleteFirst() {
@@ -49,19 +43,18 @@ public class ForwardLinked<T> implements Iterable<T> {
     }
 
     public boolean revert() {
+        boolean rsl = false;
         if (size > 1) {
-            Node<T> prev = null;
-            Node<T> current = head;
-            while (current != null) {
-                Node<T> next = current.next;
-                current.next = prev;
-                prev = current;
-                current = next;
+            while (head != null) {
+                Node<T> next = head.next;
+                head.next = prev;
+                prev = head;
+                head = next;
             }
             head = prev;
-            return true;
+            rsl = true;
         }
-        return false;
+        return rsl;
     }
 
     public int size() {
@@ -101,6 +94,17 @@ public class ForwardLinked<T> implements Iterable<T> {
         public Node(T value, Node<T> next) {
             this.value = value;
             this.next = next;
+        }
+    }
+
+    public static void main(String[] args) {
+        ForwardLinked<Integer> a = new ForwardLinked<>();
+        a.addFirst(1);
+        a.addFirst(2);
+        a.addFirst(3);
+
+        for (Object integer : a) {
+            System.out.println(integer);
         }
     }
 }
