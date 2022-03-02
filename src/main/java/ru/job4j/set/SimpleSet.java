@@ -4,7 +4,8 @@ import ru.job4j.collection.SimpleArrayList;
 import java.util.Iterator;
 
 public class SimpleSet<T> implements Set<T> {
-    private SimpleArrayList<T> set = new SimpleArrayList<>(16);
+
+    private final SimpleArrayList<T> set = new SimpleArrayList<>(16);
 
     @Override
     public boolean add(T value) {

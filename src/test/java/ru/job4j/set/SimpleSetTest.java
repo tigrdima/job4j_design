@@ -16,7 +16,7 @@ public class SimpleSetTest {
         assertFalse(set.add(2));
         assertTrue(set.add(3));
         assertTrue(set.contains(2));
-        assertFalse(set.contains(4));
+        assertFalse(set.contains(5));
     }
 
     @Test
