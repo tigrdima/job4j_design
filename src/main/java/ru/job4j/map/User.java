@@ -38,7 +38,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return hash(name, children, birthday);
     }
 
     public static void main(String[] args) {
