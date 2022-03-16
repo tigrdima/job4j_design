@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SimpleMap<K, V> implements Map1<K, V> {
     private static final float LOAD_FACTOR = 0.75f;
-    private final int capacity = 8;
+    private int capacity = 8;
     private int count = 0;
     private int modCount = 0;
     private MapEntry<K, V>[] table = new MapEntry[capacity];
@@ -20,10 +20,6 @@ public class SimpleMap<K, V> implements Map1<K, V> {
             rsl = true;
             modCount++;
             count++;
-        } else if (equalsHash(key)) {
-            table[index].value = value;
-            rsl = true;
-            modCount++;
         }
         return rsl;
     }
@@ -33,7 +29,7 @@ public class SimpleMap<K, V> implements Map1<K, V> {
     }
 
     private int indexFor(int hash) {
-        return hash & (table.length - 1);
+        return hash & (capacity - 1);
     }
 
     private boolean equalsHash(K key) {
@@ -42,8 +38,16 @@ public class SimpleMap<K, V> implements Map1<K, V> {
     }
 
     private void expand() {
-        if ((float) (count / capacity) >= LOAD_FACTOR) {
-            table = new MapEntry[(int) (capacity + (capacity * LOAD_FACTOR))];
+        if ((double) (count / capacity) >= LOAD_FACTOR) {
+            capacity += (capacity * LOAD_FACTOR);
+
+            MapEntry<K, V>[] tableNew = new MapEntry[capacity];
+
+            for (MapEntry<K, V> map: table) {
+                int index = hash((map.key.hashCode()) & (table.length - 1));
+                tableNew[index] = new MapEntry<>(map.key, map.value);
+            }
+            table = tableNew;
         }
     }
 
@@ -84,10 +88,10 @@ public class SimpleMap<K, V> implements Map1<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                while (index < table.length - 1 && table[index] == null) {
+                while (index < table.length && table[index] == null) {
                     index++;
                 }
-                return index < table.length - 1;
+                return index < table.length;
             }
 
             @Override

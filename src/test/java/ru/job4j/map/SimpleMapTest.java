@@ -11,16 +11,26 @@ import static org.junit.Assert.*;
 public class SimpleMapTest {
 
     @Test
+    public void putFalse() {
+        SimpleMap<String, String> simpleMap = new SimpleMap<>();
+        simpleMap.put("Dima", "Bike");
+        assertFalse(simpleMap.put("Dima", null));
+        assertFalse(simpleMap.put("Vasya", "Car"));
+    }
+
+    @Test
     public void put() {
         SimpleMap<String, String> simpleMap = new SimpleMap<>();
         assertTrue(simpleMap.put("Dima", "Bike"));
-        assertTrue(simpleMap.put("Dima", null));
         assertTrue(simpleMap.put("Petr", "Car"));
-        assertFalse(simpleMap.put("Vasya", "Car"));
         assertTrue(simpleMap.put("Olya", "Car"));
         assertTrue(simpleMap.put("Tanya", "Car"));
-        assertFalse(simpleMap.put("Boris", "Car"));
         assertTrue(simpleMap.put("Egor", "Car"));
+        assertTrue(simpleMap.put("Tom", "Car"));
+        assertTrue(simpleMap.put("Alisa", "Car"));
+        assertTrue(simpleMap.put("Nikolay", "Car"));
+        assertTrue(simpleMap.put("Yaroslav", "Car"));
+        assertTrue(simpleMap.put("Filip", "Car"));
     }
 
     @Test
@@ -52,7 +62,7 @@ public class SimpleMapTest {
         SimpleMap<String, String> simpleMap = new SimpleMap<>();
         assertFalse(simpleMap.remove("Dima"));
     }
-    
+
     @Test
     public void whenIteratorFromEmptyThenHasNextReturnFalse() {
         SimpleMap<String, String> simpleMap = new SimpleMap<>();
