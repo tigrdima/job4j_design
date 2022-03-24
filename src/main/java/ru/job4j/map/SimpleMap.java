@@ -39,13 +39,13 @@ public class SimpleMap<K, V> implements Map1<K, V> {
 
     private void expand() {
         if ((double) (count / capacity) >= LOAD_FACTOR) {
-            capacity += (capacity * LOAD_FACTOR);
+            capacity *= 2;
 
             MapEntry<K, V>[] tableNew = new MapEntry[capacity];
 
             for (MapEntry<K, V> map: table) {
-                int index = hash((map.key.hashCode()) & (table.length - 1));
-                tableNew[index] = new MapEntry<>(map.key, map.value);
+                int index = indexFor(hash(map.key.hashCode()));
+                tableNew[index] = map;
             }
             table = tableNew;
         }
@@ -58,7 +58,6 @@ public class SimpleMap<K, V> implements Map1<K, V> {
 
         if (table[index] != null && equalsHash(key)) {
             rsl = table[index].value;
-            modCount++;
         }
         return rsl;
     }
