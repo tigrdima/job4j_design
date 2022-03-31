@@ -19,7 +19,7 @@ public class LogFilter {
                     errorFilter.add(line);
                 }
             });
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return errorFilter;
@@ -30,7 +30,7 @@ public class LogFilter {
                 new BufferedOutputStream(
                         new FileOutputStream(file)))) {
             log.forEach(s -> out.printf("%s%n", s));
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
