@@ -37,5 +37,4 @@ public class AnalizyTest {
         }
         assertThat(rsl.toString(), is("10:57:01 ; 10:59:01 ; 11:01:02 ; 11:02:02 ; "));
     }
-
 }
