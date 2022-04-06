@@ -33,6 +33,7 @@ public class Analizy {
                 count = false;
                 end = s[1];
                 out.printf("%s;%s;%n", start, end);
+
             });
 
         } catch (IOException e) {
