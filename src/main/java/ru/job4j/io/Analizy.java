@@ -13,8 +13,7 @@ public class Analizy {
 
     public void unavailable(String source, String target) {
 
-        try (FileReader reader = new FileReader(source);
-             BufferedReader in = new BufferedReader(reader);
+        try (BufferedReader in = new BufferedReader(new FileReader(source));
              PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
 
             Pattern pattern = Pattern.compile("^500|^400");
@@ -33,7 +32,7 @@ public class Analizy {
                 }
                 count = false;
                 end = s[1];
-                out.printf("%s%s%s%n", start, " ; ", end);
+                out.printf("%s;%s;%n", start, end);
             });
 
         } catch (IOException e) {
