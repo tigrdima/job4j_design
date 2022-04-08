@@ -9,7 +9,7 @@ import java.util.*;
 public class DuplicatesFinder {
 
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get("d:\\foto");
+        Path start = Paths.get("c:\\projects");
         List<Path> duplicates = search(start);
         duplicates.sort(Comparator.naturalOrder());
         duplicates.forEach(System.out::println);

@@ -43,5 +43,4 @@ public class FileProperty {
     public int hashCode() {
         return Objects.hash(size, name);
     }
-
 }
