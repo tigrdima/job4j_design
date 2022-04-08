@@ -29,6 +29,7 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
                 pathsOfDuplicatesFiles.add(key);
             }
         });
+
         return pathsOfDuplicatesFiles;
     }
 }

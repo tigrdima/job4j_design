@@ -20,4 +20,5 @@ public class DuplicatesFinder {
         Files.walkFileTree(start, duplicatesVisitor);
         return duplicatesVisitor.pathsDuplicatesFiles();
     }
+
 }
