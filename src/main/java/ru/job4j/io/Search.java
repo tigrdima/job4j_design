@@ -10,8 +10,16 @@ import java.util.function.Predicate;
 public class Search {
 
     public static void main(String[] args) throws IOException {
-        Predicate<Path> predicate = p -> p.toFile().getName().endsWith(".iml");
-        Path start = Paths.get("c:\\projects");
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+        }
+
+       if (args.length == 1) {
+           throw new IllegalArgumentException("File extension to look for not found");
+       }
+        Path start = Paths.get(args[0]);
+        Predicate<Path> predicate = p -> p.toFile().getName().endsWith(args[1]);
+
         search(start, predicate).forEach(System.out::println);
     }
 
