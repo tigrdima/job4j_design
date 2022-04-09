@@ -10,17 +10,22 @@ import java.util.function.Predicate;
 public class Search {
 
     public static void main(String[] args) throws IOException {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
-        }
+        validate(args);
 
-       if (args.length == 1) {
-           throw new IllegalArgumentException("File extension to look for not found");
-       }
         Path start = Paths.get(args[0]);
         Predicate<Path> predicate = p -> p.toFile().getName().endsWith(args[1]);
 
         search(start, predicate).forEach(System.out::println);
+    }
+
+    public static void validate(String[] args) {
+        if (args.length < 2) {
+            throw new IllegalArgumentException("Arguments not found: 1 - Root folder. Usage java -jar dir.jar ROOT_FOLDER., "
+                                                + "2 - File extension to look for");
+        }
+        if (!args[1].startsWith(".")) {
+            throw new IllegalArgumentException("The file extension must start with \".\"");
+        }
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
