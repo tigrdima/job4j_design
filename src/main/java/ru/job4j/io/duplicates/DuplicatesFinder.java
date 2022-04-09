@@ -10,9 +10,7 @@ public class DuplicatesFinder {
 
     public static void main(String[] args) throws IOException {
         Path start = Paths.get("c:\\projects");
-        List<Path> duplicates = search(start);
-        duplicates.sort(Comparator.naturalOrder());
-        duplicates.forEach(System.out::println);
+        search(start).forEach(System.out::println);
     }
 
     public static List<Path> search(Path start) throws IOException {
