@@ -40,4 +40,5 @@ public class ArgsNameTest {
     public void whenWrongSomeArgument2() {
         ArgsName jvm = ArgsName.of(new String[]{"enconding=UTF-8", "-Xmx="});
     }
+
 }
