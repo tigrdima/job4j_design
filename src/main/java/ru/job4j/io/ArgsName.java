@@ -16,7 +16,7 @@ public class ArgsName {
     private void parse(String[] args) {
         for (String arg : args) {
             String[] keyValue = arg.split("=", 2);
-            if (keyValue[1].isEmpty()) {
+            if (keyValue.length == 1 || !keyValue[0].startsWith("-")) {
                 throw new IllegalArgumentException("WrongSomeArgument : " + keyValue[0]);
             }
             values.put(keyValue[0].substring(1), keyValue[1]);
