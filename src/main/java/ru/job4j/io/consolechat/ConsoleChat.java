@@ -1,10 +1,7 @@
 package ru.job4j.io.consolechat;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class ConsoleChat {
     private static final String OUT = "закончить";
@@ -18,7 +15,7 @@ public class ConsoleChat {
         this.botAnswers = botAnswers;
     }
 
-    public void run() throws IOException {
+    public void run() {
         List<String> log = new ArrayList<>();
         String botAnswer;
         String botName = "Бот";
@@ -29,36 +26,38 @@ public class ConsoleChat {
 
         System.out.print(userName + " : ");
         String im = scanner.nextLine();
-        String imAsk = im.equals(STOP) ? STOP : im.equals(OUT) ? OUT : CONTINUE;
+        String imAsk = STOP.equals(im) ? STOP : OUT.equals(im) ? OUT : CONTINUE;
 
-        while (!imAsk.equals(OUT)) {
-            if (imAsk.equals(CONTINUE)) {
+        List<String> readPhrase = readPhrases();
+
+        while (!OUT.equals(imAsk)) {
+            if (CONTINUE.equals(imAsk)) {
                 log.add(userName + " : " + im);
-                int randomAnswer = random.nextInt(readPhrases().size() - 1);
-                botAnswer = botName + " : " + readPhrases().get(randomAnswer);
+                int randomAnswer = random.nextInt(readPhrase.size() - 1);
+               botAnswer = botName + " : " + readPhrase.get(randomAnswer);
                 System.out.println(botAnswer);
                 log.add(botAnswer);
             }
-            while (imAsk.equals(STOP)) {
+            while (STOP.equals(imAsk)) {
                 log.add(userName + " : " + im);
                 System.out.print(userName + " : ");
                 im = scanner.nextLine();
-                if (im.equals(CONTINUE)) {
+                if (CONTINUE.equals(im)) {
                     log.add(userName + " : " + im);
                     botAnswer = botName + " : " + "продолжим";
                     System.out.println(botAnswer);
                     log.add(botAnswer);
                     imAsk = CONTINUE;
-                } else if (im.equals(OUT)) {
+                } else if (OUT.equals(im)) {
                     imAsk = OUT;
                 }
             }
-            if (im.equals(OUT)) {
+            if (OUT.equals(im)) {
                 break;
             }
             System.out.print(userName + " : ");
             im = scanner.nextLine();
-            imAsk = im.equals(STOP) ? STOP : im.equals(OUT) ? OUT : CONTINUE;
+            imAsk = STOP.equals(im) ? STOP : OUT.equals(im) ? OUT : CONTINUE;
         }
         log.add(userName + " : " + im);
         System.out.println(botName + " : " + "До свидания");
@@ -67,21 +66,25 @@ public class ConsoleChat {
         saveLog(log);
     }
 
-    private List<String> readPhrases() throws IOException {
+    private List<String> readPhrases() {
         List<String> read = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(botAnswers))) {
             reader.lines().forEach(read::add);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return read;
     }
 
-    private void saveLog(List<String> log) throws IOException {
+    private void saveLog(List<String> log) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(path))) {
             log.forEach(writer::println);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         String path = ".\\src\\main\\java\\ru\\job4j\\io\\consolechat\\log.txt";
         String botAnswers = ".\\src\\main\\java\\ru\\job4j\\io\\consolechat\\botAnswers.txt";
 
