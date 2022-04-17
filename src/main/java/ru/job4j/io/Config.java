@@ -23,25 +23,22 @@ public class Config {
         Pattern pattern = Pattern.compile("^#|^\\s*$");
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines().forEach(line -> {
-                        Matcher matcher = pattern.matcher(line);
-                        if (!matcher.find()) {
-                            String[] rsl = line.split("=");
-                            values.put(rsl[0], rsl[1]);
-                        }
-                    });
+                Matcher matcher = pattern.matcher(line);
+                if (!matcher.find()) {
+                    if (!line.contains("=")) {
+                        throw new IllegalArgumentException("Argument : " + line + " - wrong");
+                    }
+                    String[] rsl = line.split("=", 2);
+                    values.put(rsl[0], rsl[1]);
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public String value(String key) {
-        String rsl = null;
-        for (Entry map: values.entrySet()) {
-            if (Objects.equals(key, map.getKey())) {
-                rsl = String.valueOf(map.getValue());
-            }
-        }
-        return rsl;
+        return values.get(key);
     }
 
     @Override
@@ -58,4 +55,4 @@ public class Config {
     public static void main(String[] args) {
         System.out.println(new Config("data/config1.properties"));
     }
-    }
+}

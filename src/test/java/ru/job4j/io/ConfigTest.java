@@ -15,6 +15,7 @@ public class ConfigTest {
         config.load();
         assertThat(config.value("hibernate.dialect"), is("org.hibernate.dialect.PostgreSQLDialect"));
         assertThat(config.value("hibernate.connection.password"), is(nullValue()));
+        assertThat(config.value("hibernate.connection.username"), is("postgres=true"));
     }
 
     @Test
@@ -25,11 +26,10 @@ public class ConfigTest {
         assertThat(config.value("hibernate.dialect"), is(nullValue()));
     }
 
-   /**@Test(expected = IllegalArgumentException.class)
+   @Test(expected = IllegalArgumentException.class)
     public void whenConfigWithPatternViolation() {
         String path = "./data/config3.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("hibernate.dialect"), is(nullValue()));
-    }*/
+    }
 }
