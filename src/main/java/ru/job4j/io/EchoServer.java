@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
-import org.checkerframework.checker.units.qual.A;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,8 +15,9 @@ public class EchoServer {
     static final String EXIT = "^.+\\?msg=Exit\\s.+$";
     static final String WHAT = "^.+\\?msg=What\\s.+$";
     static final String ANSWER = "HTTP/1.1 200 OK\r\n\r\n";
+    private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
                 Socket socket = server.accept();
@@ -39,6 +41,8 @@ public class EchoServer {
                     out.flush();
                 }
             }
+        } catch (IOException e) {
+            LOG.error("Error :", e);
         }
     }
 }
