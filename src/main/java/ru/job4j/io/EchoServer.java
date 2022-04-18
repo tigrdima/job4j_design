@@ -15,7 +15,7 @@ public class EchoServer {
     static final String EXIT = "^.+\\?msg=Exit\\s.+$";
     static final String WHAT = "^.+\\?msg=What\\s.+$";
     static final String ANSWER = "HTTP/1.1 200 OK\r\n\r\n";
-    private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
 
     public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(9000)) {
