@@ -23,20 +23,17 @@ public class EchoServer {
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
 
+                    out.write(ANSWER.getBytes());
                     String str = in.readLine();
 
                     if (str.matches(HELLO)) {
-                        out.write(ANSWER.getBytes());
                         out.write("Hello".getBytes());
                     } else if (str.matches(EXIT)) {
-                        out.write(ANSWER.getBytes());
                         out.write("Server shut down".getBytes());
                         server.close();
                     } else if (str.matches(WHAT)) {
-                        out.write(ANSWER.getBytes());
                         out.write("What".getBytes());
                     } else {
-                        out.write(ANSWER.getBytes());
                         out.write(str.getBytes());
                     }
                     out.flush();
