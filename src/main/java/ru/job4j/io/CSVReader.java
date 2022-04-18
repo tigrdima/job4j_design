@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,9 +14,6 @@ import java.util.Scanner;
 public class CSVReader {
     public static void handle(ArgsName argsName) {
         File path = new File(argsName.get("path"));
-        if (!path.exists()) {
-            throw new IllegalArgumentException(path + " - file not found");
-        }
         String delimiter = argsName.get("delimiter");
         String out = argsName.get("out");
         String filter = String.join(delimiter, Arrays.asList(argsName.get("filter").split(",")));
@@ -59,6 +58,10 @@ public class CSVReader {
     private static void validate(String[] args) {
         if (args.length != 4) {
             throw new IllegalArgumentException("Not all arguments are present");
+        }
+
+        if (!Files.exists(Path.of(ArgsName.of(new String[]{args[0]}).get("path")))) {
+            throw new IllegalArgumentException(args[0] + " - file not found");
         }
     }
 
