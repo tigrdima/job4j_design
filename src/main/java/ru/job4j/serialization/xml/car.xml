@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<car>
+    <regNumberCar number="678FGH"/>
+    <name>Audi</name>
+    <options>
+        <option>Abs</option>
+        <option>A/C</option>
+        <option>Leather interior</option>
+    </options>
+    <automaticTransmission>true</automaticTransmission>
+    <carMileage>2000</carMileage>
+</car>
