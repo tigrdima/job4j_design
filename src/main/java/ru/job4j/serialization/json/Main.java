@@ -58,6 +58,8 @@ public class Main {
         regNumberCar.setCar(car2);
         car2.setRegNumberCar(regNumberCar);
 
+        System.out.println(new JSONObject(car2));
+
         JSONObject jsonRegNumberCar = new JSONObject("{\"number\":\"085FYW\"}");
 
         List<String> option = new ArrayList<>();

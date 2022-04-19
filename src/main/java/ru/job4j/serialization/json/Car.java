@@ -1,4 +1,6 @@
 package ru.job4j.serialization.json;
+import org.json.JSONPropertyIgnore;
+
 import javax.xml.bind.annotation.*;
 import java.util.Arrays;
 

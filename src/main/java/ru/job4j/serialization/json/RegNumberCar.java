@@ -1,5 +1,7 @@
 package ru.job4j.serialization.json;
 
+import org.json.JSONPropertyIgnore;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -11,6 +13,7 @@ public class RegNumberCar {
 
     private Car car;
 
+    @JSONPropertyIgnore
     public Car getCar() {
         return car;
     }
