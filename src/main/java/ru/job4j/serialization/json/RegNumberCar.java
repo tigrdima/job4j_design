@@ -9,6 +9,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RegNumberCar {
 
+    private Car car;
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+         this.car = car;
+    }
+
     @XmlAttribute
     private String number;
 
@@ -17,6 +27,10 @@ public class RegNumberCar {
 
     public RegNumberCar(String number) {
         this.number = number;
+    }
+
+    public String getNumber() {
+        return number;
     }
 
     @Override

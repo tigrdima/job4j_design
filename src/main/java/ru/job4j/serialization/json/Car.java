@@ -1,13 +1,12 @@
 package ru.job4j.serialization.json;
-
 import javax.xml.bind.annotation.*;
 import java.util.Arrays;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Car {
-
     private RegNumberCar regNumberCar;
+
     @XmlAttribute
     private String name;
 
@@ -28,6 +27,31 @@ public class Car {
         this.options = options;
         this.automaticTransmission = automaticTransmission;
         this.carMileage = carMileage;
+    }
+
+    public RegNumberCar getRegNumberCar() {
+        return regNumberCar;
+    }
+
+    public void setRegNumberCar(RegNumberCar regNumberCar) {
+        this.regNumberCar = regNumberCar;
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String[] getOptions() {
+        return options;
+    }
+
+    public boolean isAutomaticTransmission() {
+        return automaticTransmission;
+    }
+
+    public int getCarMileage() {
+        return carMileage;
     }
 
     @Override

@@ -2,13 +2,15 @@ package ru.job4j.serialization.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     static final Gson JSONCAR = new GsonBuilder().create();
@@ -50,5 +52,28 @@ public class Main {
             Car carMod2 = (Car) unmarshaller.unmarshal(reader);
             System.out.println(carMod2);
         }
+
+        RegNumberCar regNumberCar = new RegNumberCar();
+        Car car2 = new Car();
+        regNumberCar.setCar(car2);
+        car2.setRegNumberCar(regNumberCar);
+
+        JSONObject jsonRegNumberCar = new JSONObject("{\"number\":\"085FYW\"}");
+
+        List<String> option = new ArrayList<>();
+        option.add("nonAbs");
+        option.add("nonA/C");
+        option.add("Fabric interior");
+        JSONArray jsonOptions = new JSONArray(option);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("regNumberCar", jsonRegNumberCar);
+        jsonObject.put("name", car.getName());
+        jsonObject.put("options", jsonOptions);
+        jsonObject.put("automaticTransmission", car.isAutomaticTransmission());
+        jsonObject.put("carMileage", car.getCarMileage());
+
+        System.out.println(jsonObject);
+        System.out.println(new JSONObject(car));
     }
 }
