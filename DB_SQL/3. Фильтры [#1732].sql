@@ -1,14 +1,14 @@
+create table type(
+	id serial primary key,
+	name text
+);
+
 create table product(
 	id serial primary key,
 	name text,
 	price int,
 	expired_date date,
-	type_id int references type(id);
-);
-
-create table type(
-	id serial primary key,
-	name text
+	type_id int references type(id)
 );
 
 insert into type (name) values ('СЫР');
@@ -40,7 +40,7 @@ select p.name, t.name
 from product as p
 join type as t
 on p.type_id = t.id
-where t.name like 'СЫР'
+where t.name like 'СЫР';
 
 select * from product where name like '%мороженое%';
 
