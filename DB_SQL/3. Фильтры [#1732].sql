@@ -3,7 +3,7 @@ create table product(
 	name text,
 	price int,
 	expired_date date,
-	type_id int
+	type_id int references type(id);
 );
 
 create table type(
