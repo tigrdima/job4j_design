@@ -1,6 +1,8 @@
 package ru.job4j.jbbc;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -96,34 +98,38 @@ public class TableEditor implements AutoCloseable {
     @Override
     public void close() throws Exception {
         if (connection != null) {
+            statement.close();
             connection.close();
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        String path = "src/main/resources/app.properties";
+    public static void main(String[] args) {
 
         Properties properties = new Properties();
-        properties.load(new FileInputStream(path));
 
-        TableEditor tableEditor = new TableEditor(properties);
-        Connection connection = tableEditor.connection;
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+            properties.load(in);
 
-        tableEditor.createTable("www");
-        System.out.println(getTableScheme(connection, "www"));
+            TableEditor tableEditor = new TableEditor(properties);
+            Connection connection = tableEditor.connection;
 
-        tableEditor.addColumn("www", "id", "serial primary key");
-        System.out.println(getTableScheme(connection, "www"));
+            tableEditor.createTable("www");
+            System.out.println(getTableScheme(connection, "www"));
 
-        tableEditor.renameColumn("www", "id", "name");
-        System.out.println(getTableScheme(connection, "www"));
+            tableEditor.addColumn("www", "id", "serial primary key");
+            System.out.println(getTableScheme(connection, "www"));
 
-        tableEditor.dropColumn("www", "name");
-        System.out.println(getTableScheme(connection, "www"));
+            tableEditor.renameColumn("www", "id", "name");
+            System.out.println(getTableScheme(connection, "www"));
 
-        tableEditor.dropTable("www");
-        System.out.println(getTableScheme(connection, "www"));
+            tableEditor.dropColumn("www", "name");
+            System.out.println(getTableScheme(connection, "www"));
 
-        tableEditor.close();
+            tableEditor.dropTable("www");
+            System.out.println(getTableScheme(connection, "www"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
