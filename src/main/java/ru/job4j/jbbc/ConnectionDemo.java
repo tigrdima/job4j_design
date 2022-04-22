@@ -8,19 +8,25 @@ import java.sql.SQLException;
 
 public class ConnectionDemo {
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        Config config = new Config("C:\\projects\\job4j_design\\src\\main\\java\\ru\\job4j\\jbbc\\app.properties");
+    private static Connection getConnection() throws Exception {
+        Config config = new Config("src/main/resources/app.properties");
         config.load();
 
         Class.forName(config.value("driver"));
         String url = config.value("url_db");
         String login = config.value("login");
         String password = config.value("password");
+        return DriverManager.getConnection(url, login, password);
+    }
 
-        try (Connection connection = DriverManager.getConnection(url, login, password)) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+
+        try (Connection connection = getConnection()) {
             DatabaseMetaData metaData = connection.getMetaData();
             System.out.println(metaData.getUserName());
             System.out.println(metaData.getURL());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
