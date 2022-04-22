@@ -108,26 +108,27 @@ public class TableEditor implements AutoCloseable {
         Properties properties = new Properties();
 
         try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+
             properties.load(in);
 
-            TableEditor tableEditor = new TableEditor(properties);
-            Connection connection = tableEditor.connection;
+            try (TableEditor tableEditor = new TableEditor(properties);
+                 Connection connection = tableEditor.connection) {
 
-            tableEditor.createTable("www");
-            System.out.println(getTableScheme(connection, "www"));
+                tableEditor.createTable("www");
+                System.out.println(getTableScheme(connection, "www"));
 
-            tableEditor.addColumn("www", "id", "serial primary key");
-            System.out.println(getTableScheme(connection, "www"));
+                tableEditor.addColumn("www", "id", "serial primary key");
+                System.out.println(getTableScheme(connection, "www"));
 
-            tableEditor.renameColumn("www", "id", "name");
-            System.out.println(getTableScheme(connection, "www"));
+                tableEditor.renameColumn("www", "id", "name");
+                System.out.println(getTableScheme(connection, "www"));
 
-            tableEditor.dropColumn("www", "name");
-            System.out.println(getTableScheme(connection, "www"));
+                tableEditor.dropColumn("www", "name");
+                System.out.println(getTableScheme(connection, "www"));
 
-            tableEditor.dropTable("www");
-            System.out.println(getTableScheme(connection, "www"));
-
+                tableEditor.dropTable("www");
+                System.out.println(getTableScheme(connection, "www"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
