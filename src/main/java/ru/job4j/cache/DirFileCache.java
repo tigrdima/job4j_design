@@ -18,7 +18,6 @@ public class DirFileCache extends AbstractCache<String, String> {
 
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()));
-
             StringBuilder stringBuilder = new StringBuilder();
             bufferedReader.lines().forEach(stringBuilder::append);
             String str = stringBuilder.toString();

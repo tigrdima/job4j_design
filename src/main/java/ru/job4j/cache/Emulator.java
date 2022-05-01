@@ -28,12 +28,9 @@ public class Emulator {
                 String nameFileFromCache = scanner.next();
                 System.out.println(dirFileCache.get(nameFileFromCache));
             }
-            case 3 -> {
-                runMenu = false;
-            }
+            case 3 -> runMenu = false;
             default -> System.out.println("You are input wrong select, input true select");
         }
-
     }
 
     private void menu() {
