@@ -8,6 +8,7 @@ public class Emulator {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean runMenu = true;
 
+    @SuppressWarnings("checkstyle:InnerAssignment")
     private static void resultEmulator() {
         System.out.print("Select : ");
         int select = scanner.nextInt();
@@ -28,7 +29,9 @@ public class Emulator {
                 String nameFileFromCache = scanner.next();
                 System.out.println(dirFileCache.get(nameFileFromCache));
             }
-            case 3 -> runMenu = false;
+            case 3 -> {
+                runMenu = false;
+            }
             default -> System.out.println("You are input wrong select, input true select");
         }
     }

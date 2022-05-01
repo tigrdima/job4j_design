@@ -16,13 +16,12 @@ public abstract class AbstractCache<K, V> {
         V rsl = null;
         SoftReference<V> value = cache.get(key);
 
-       if (value != null) {
+        if (value != null) {
             V val = value.get();
             if (val != null) {
                 rsl = val;
             }
         }
-
         return rsl;
     }
 

@@ -1,8 +1,9 @@
 package ru.job4j.cache;
 
-import net.sf.saxon.trans.SymbolicName;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class DirFileCache extends AbstractCache<String, String> {
 
@@ -14,7 +15,7 @@ public class DirFileCache extends AbstractCache<String, String> {
 
     @Override
     protected String load(String key) {
-    File file = new File(cachingDir + "\\" + key);
+        File file = new File(cachingDir + "\\" + key);
 
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()));
