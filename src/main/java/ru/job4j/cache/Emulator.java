@@ -8,31 +8,32 @@ public class Emulator {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean runMenu = true;
 
-    @SuppressWarnings("checkstyle:InnerAssignment")
-    private static void resultEmulator() {
+    private static void resultEmulator() throws IOException {
         System.out.print("Select : ");
         int select = scanner.nextInt();
 
         switch (select) {
-            case 0 -> {
+            case 0:
                 System.out.print("Input path : ");
                 String pathDirFileCache = scanner.next();
                 dirFileCache = new DirFileCache(pathDirFileCache);
-            }
-            case 1 -> {
+                break;
+            case 1:
                 System.out.print("Input filename : ");
                 String nameFileToCache = scanner.next();
-                dirFileCache.load(nameFileToCache);
-            }
-            case 2 -> {
+                String str = dirFileCache.load(nameFileToCache);
+                dirFileCache.put(nameFileToCache, str);
+                break;
+            case 2:
                 System.out.print("Input filename : ");
                 String nameFileFromCache = scanner.next();
                 System.out.println(dirFileCache.get(nameFileFromCache));
-            }
-            case 3 -> {
+                break;
+            case 3:
                 runMenu = false;
-            }
-            default -> System.out.println("You are input wrong select, input true select");
+                break;
+            default:
+                System.out.println("You are input wrong select, input true select");
         }
     }
 
@@ -48,7 +49,11 @@ public class Emulator {
             for (int i = 0; i < menu.length; i++) {
                 System.out.println(i + "-" + menu[i]);
             }
-            resultEmulator();
+            try {
+                resultEmulator();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
