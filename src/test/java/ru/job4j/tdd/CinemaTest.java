@@ -81,5 +81,6 @@ public class CinemaTest {
         Calendar date = Calendar.getInstance();
         date.set(2020, Calendar.FEBRUARY, 25, 23, 0);
         cinema.buy(account, 1, 10, date);
+        cinema.buy(account, 1, 10, date);
     }
 }
