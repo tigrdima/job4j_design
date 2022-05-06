@@ -33,14 +33,4 @@ public class ReportXML implements Report {
         }
         return xml;
     }
-
-    public static void main(String[] args) {
-        MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
-        store.add(new Employee("Ivan", now, now, 10000.45));
-        store.add(new Employee("Vova", now, now, 9056.40));
-
-        Report report = new ReportXML(store);
-        System.out.println(report.generate(em -> true));
-    }
 }

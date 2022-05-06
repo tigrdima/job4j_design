@@ -1,14 +1,11 @@
 package ru.job4j.srp;
 
-import org.junit.Ignore;
 import org.junit.Test;
-import ru.job4j.serialization.json.Car;
-
-import javax.xml.bind.*;
-import java.io.StringReader;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -69,7 +66,7 @@ public class ReportEngineTest {
         store.add(worker);
         store.add(worker2);
         store.add(worker3);
-        double rate = 75.6;
+
         Report engine = new ReportAccounting(store);
         String ln = System.lineSeparator();
         StringBuilder expect = new StringBuilder();
@@ -78,7 +75,7 @@ public class ReportEngineTest {
             expect.append(em.getName()).append(";")
                     .append(em.getHired()).append(";")
                     .append(em.getFired()).append(";")
-                    .append((int) (em.getSalary() / rate)).append(";")
+                    .append((int) (em.getSalary() / ReportAccounting.RATE)).append(";")
                     .append(ln);
         }
         assertThat(engine.generate(em -> true), is(expect.toString()));
@@ -108,92 +105,50 @@ public class ReportEngineTest {
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 
-    @Ignore
     @Test
     public void whenReportJson() {
         MemStore store = new MemStore();
         Calendar now = new GregorianCalendar(2020, Calendar.NOVEMBER, 10);
-        Employee worker = new Employee("Ivan", now, now, 10000.45);
-        Employee worker2 = new Employee("Vova", now, now, 9056.40);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss X");
+        String date = formatter.format(now.getTime());
+        Employee worker = new Employee("Ivan", now, now, 10000.4);
+        Employee worker2 = new Employee("Vova", now, now, 9056.3);
         store.add(worker);
         store.add(worker2);
         Report engine = new ReportJson(store);
+        String temple = "{\"name\":\"%s\",\"hired\":\"%s\",\"fired\":\"%s\",\"salary\":%.1f}";
 
-        String expect = "["
-                + "{"
-                + "\"name\":\"Ivan\","
-                + "\"hired\":"
-                + "{"
-                + "\"year\":2020,"
-                + "\"month\":10,"
-                + "\"dayOfMonth\":10,"
-                + "\"hourOfDay\":0,"
-                + "\"minute\":0,"
-                + "\"second\":0"
-                + "},"
-                + "\"fired\":"
-                + "{"
-                + "\"year\":2020,"
-                + "\"month\":10,"
-                + "\"dayOfMonth\":10,"
-                + "\"hourOfDay\":0,"
-                + "\"minute\":0,"
-                + "\"second\":0"
-                + "},"
-                + "\"salary\":10000.45"
-                + "},"
-                + "{"
-                + "\"name\":\"Vova\","
-                + "\"hired\":"
-                + "{"
-                + "\"year\":2020,"
-                + "\"month\":10,"
-                + "\"dayOfMonth\":10,"
-                + "\"hourOfDay\":0,"
-                + "\"minute\":0,"
-                + "\"second\":0"
-                + "},"
-                + "\"fired\":"
-                + "{"
-                + "\"year\":2020,"
-                + "\"month\":10,"
-                + "\"dayOfMonth\":10,"
-                + "\"hourOfDay\":0,"
-                + "\"minute\":0,"
-                + "\"second\":0"
-                + "},"
-                + "\"salary\":9056.4"
-                + "}"
-                + "]";
+        StringBuilder expect = new StringBuilder();
+        expect.append("{\"employees\":[");
+        expect.append(String.format(Locale.ROOT, temple + ",", worker.getName(), date, date, worker.getSalary()));
+        expect.append(String.format(Locale.ROOT, temple, worker2.getName(), date, date, worker2.getSalary()));
+        expect.append("]}");
 
-        assertThat(engine.generate(em -> true), is(expect));
+        assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 
-    @Ignore
     @Test
-    public void whenReportXML() throws JAXBException {
+    public void whenReportXML() {
         MemStore store = new MemStore();
-        Calendar now = new GregorianCalendar(2020, Calendar.NOVEMBER, 10);
-        Employee worker = new Employee("Ivan", now, now, 10000.45);
-        Employee worker2 = new Employee("Vova", now, now, 9056.40);
+        Calendar now = Calendar.getInstance();
+        now.set(2020, Calendar.NOVEMBER, 10);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss X");
+        String date = format.format(now.getTime());
+        Employee worker = new Employee("Ivan", now, now, 10000.4);
+        Employee worker2 = new Employee("Vova", now, now, 9056.3);
         store.add(worker);
         store.add(worker2);
-        Report engine = new ReportJson(store);
-        String xml = engine.generate(em -> true);
+        Report engine = new ReportXML(store);
 
-        JAXBContext context = JAXBContext.newInstance(Car.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        StringBuilder expect = new StringBuilder();
+        String rsl = engine.generate(em -> true).replaceAll("\\n\\s*", "");
+        String template = "<employee name=\"%s\" hired=\"%s\" fired=\"%s\" salary=\"%.1f\"/>";
 
-        try (StringReader reader = new StringReader(xml)) {
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            Employees employees = (Employees) unmarshaller.unmarshal(reader);
-            List<Employee> expect = employees.getEmployees();
+        expect.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>").append("<employees>");
+        expect.append(String.format(Locale.ROOT, template, worker.getName(), date, date, worker.getSalary()));
+        expect.append(String.format(Locale.ROOT, template, worker2.getName(), date, date, worker2.getSalary()));
+        expect.append("</employees>");
 
-            assertThat(expect.get(0), is(worker));
-
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
+        assertThat(rsl, is(expect.toString()));
     }
 }

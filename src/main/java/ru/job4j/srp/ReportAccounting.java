@@ -1,10 +1,9 @@
 package ru.job4j.srp;
 
-import java.util.Calendar;
 import java.util.function.Predicate;
 
 public class ReportAccounting implements Report {
-
+    public static final double RATE = 75.6;
     private final Store store;
 
     public ReportAccounting(Store store) {
@@ -14,7 +13,6 @@ public class ReportAccounting implements Report {
     @Override
     public String generate(Predicate<Employee> filter) {
         String ln = System.lineSeparator();
-        double rate = 75.6;
         StringBuilder text = new StringBuilder();
 
         text.append("Name; Hired; Fired; Salary(EUR);").append(ln);
@@ -22,7 +20,7 @@ public class ReportAccounting implements Report {
             text.append(employee.getName()).append(";")
                     .append(employee.getHired()).append(";")
                     .append(employee.getFired()).append(";")
-                    .append((int) (employee.getSalary() / rate)).append(";")
+                    .append((int) (employee.getSalary() / RATE)).append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();
