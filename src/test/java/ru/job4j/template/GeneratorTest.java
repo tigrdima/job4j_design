@@ -25,7 +25,7 @@ public class GeneratorTest {
         assertThat(expected, is(rsl));
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void produceMapHaveNoKeys() {
         Map<String, String> map = new HashMap<>();
 
@@ -35,7 +35,7 @@ public class GeneratorTest {
         generator.produce(template, map);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void produceMapContainLessKeys() {
         Map<String, String> map = new HashMap<>();
         map.put("name", "Ivan Ivanov");
@@ -47,7 +47,7 @@ public class GeneratorTest {
 
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void produceMapContainRedundantKeys() {
         Map<String, String> map = new HashMap<>();
         map.put("name", "Ivan Ivanov");
@@ -60,7 +60,7 @@ public class GeneratorTest {
         generator.produce(template, map);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void produceMapNotMatcherKeys() {
         Map<String, String> map = new HashMap<>();
         map.put("name", "Ivan Ivanov");
@@ -72,7 +72,7 @@ public class GeneratorTest {
         generator.produce(template, map);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void produceSampleHasNoKeys() {
         Map<String, String> map = new HashMap<>();
         map.put("name", "Ivan Ivanov");
