@@ -23,4 +23,5 @@ public class ReportJson implements Report {
         Gson gson = JSONBUILDER.create();
         return gson.toJson(employees);
     }
+
 }

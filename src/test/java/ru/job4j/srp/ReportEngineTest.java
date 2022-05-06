@@ -139,7 +139,6 @@ public class ReportEngineTest {
         store.add(worker);
         store.add(worker2);
         Report engine = new ReportXML(store);
-
         StringBuilder expect = new StringBuilder();
         String rsl = engine.generate(em -> true).replaceAll("\\n\\s*", "");
         String template = "<employee name=\"%s\" hired=\"%s\" fired=\"%s\" salary=\"%.1f\"/>";
