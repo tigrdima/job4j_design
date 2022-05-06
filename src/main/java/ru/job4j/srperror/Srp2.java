@@ -16,4 +16,8 @@ public class Srp2 {
         this.balanceAccount = balanceAccount;
         this.car = car;
     }
+
+    public void output(int idAccount, String account, int balanceAccount) {
+        System.out.printf("%d,%s,%d", idAccount, account, balanceAccount);
+    }
 }
