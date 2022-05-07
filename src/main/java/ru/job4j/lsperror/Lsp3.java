@@ -31,5 +31,6 @@ class Man2 extends Force {
     public String getLiftWeight(int weight) {
         return weight > 100 ?  "Сильный человек" :  "Слабый человек";
     }
+
 }
 
