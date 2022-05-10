@@ -1,9 +1,9 @@
-package ru.job4j.lsp;
+package ru.job4j.lsp.ctrlqual;
 
 import java.util.*;
 
 public class ControlQuality {
-    List<Store> stores;
+    private final List<Store> stores;
 
     public ControlQuality(List<Store> stores) {
         this.stores = stores;
@@ -12,7 +12,9 @@ public class ControlQuality {
     public void addStore(List<Food> foods) {
         for (Food food : foods) {
             for (Store store : stores) {
-                store.add(food);
+                if (store.accept(food)) {
+                    store.add(food);
+                }
             }
         }
     }

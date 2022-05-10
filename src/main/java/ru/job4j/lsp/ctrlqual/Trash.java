@@ -1,11 +1,11 @@
-package ru.job4j.lsp;
+package ru.job4j.lsp.ctrlqual;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Trash implements Store {
-    private final static double K2 = 100;
-    List<Food> foods = new ArrayList<>();
+    public final static double K2 = 100;
+    private final List<Food> foods = new ArrayList<>();
 
     @Override
     public boolean add(Food food) {
@@ -23,11 +23,6 @@ public class Trash implements Store {
 
     @Override
     public List<Food> getAll() {
-        return foods;
-    }
-
-    @Override
-    public double analysis(Food food) {
-        return Store.super.analysis(food);
+        return new ArrayList<>(foods);
     }
 }

@@ -1,4 +1,4 @@
-package ru.job4j.lsp;
+package ru.job4j.lsp.ctrlqual;
 
 import java.util.Calendar;
 import java.util.List;
