@@ -4,7 +4,6 @@ import org.junit.Test;
 import ru.job4j.lsp.ctrlqual.*;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -15,8 +14,15 @@ public class ControlQualityTest {
     @Test
     public void foodPriceChange() {
         Calendar createDate = Calendar.getInstance();
-        createDate.set(createDate.get(Calendar.YEAR), createDate.get(Calendar.MONTH), createDate.get(Calendar.DAY_OF_MONTH) - 9, 0, 0);
-        Food food = new MilkFood("Колбаса", 10, new GregorianCalendar(2022, Calendar.MAY, 2), 450, 0.5);
+        Calendar expiryDate = Calendar.getInstance();
+        createDate.set(createDate.get(Calendar.YEAR),
+                createDate.get(Calendar.MONTH),
+                createDate.get(Calendar.DAY_OF_MONTH) - 9, 0, 0);
+        expiryDate.set(expiryDate.get(Calendar.YEAR),
+                expiryDate.get(Calendar.MONTH),
+                expiryDate.get(Calendar.DAY_OF_MONTH) + 1, 0, 0);
+
+        Food food = new MilkFood("Колбаса", expiryDate, createDate, 450, 0.5);
 
         Store warehouse = new Warehouse();
         Store shop = new Shop();
@@ -32,8 +38,15 @@ public class ControlQualityTest {
     @Test
     public void foodWarehouseDistribution() {
         Calendar createDate = Calendar.getInstance();
-        createDate.set(createDate.get(Calendar.YEAR), createDate.get(Calendar.MONTH), createDate.get(Calendar.DAY_OF_MONTH), 0, 0);
-        Food food = new MilkFood("Молоко", 4, createDate, 20, 0.1);
+        Calendar expiryDate = Calendar.getInstance();
+        createDate.set(createDate.get(Calendar.YEAR),
+                createDate.get(Calendar.MONTH),
+                createDate.get(Calendar.DAY_OF_MONTH), -1, 0, 0);
+        expiryDate.set(expiryDate.get(Calendar.YEAR),
+                expiryDate.get(Calendar.MONTH),
+                expiryDate.get(Calendar.DAY_OF_MONTH) + 5, 0, 0);
+
+        Food food = new MilkFood("Молоко", expiryDate, createDate, 20, 0.1);
 
         Store warehouse = new Warehouse();
         Store shop = new Shop();
@@ -51,8 +64,15 @@ public class ControlQualityTest {
     @Test
     public void foodShopDistribution() {
         Calendar createDate = Calendar.getInstance();
-        createDate.set(createDate.get(Calendar.YEAR), createDate.get(Calendar.MONTH), createDate.get(Calendar.DAY_OF_MONTH) - 3, 0, 0);
-        Food food = new Bread("Хлеб", 8, createDate, 45, 0.4);
+        Calendar expiryDate = Calendar.getInstance();
+        createDate.set(createDate.get(Calendar.YEAR),
+                createDate.get(Calendar.MONTH),
+                createDate.get(Calendar.DAY_OF_MONTH) - 3, 0, 0);
+        expiryDate.set(expiryDate.get(Calendar.YEAR),
+                expiryDate.get(Calendar.MONTH),
+                expiryDate.get(Calendar.DAY_OF_MONTH) + 8, 0, 0);
+
+        Food food = new Bread("Хлеб", expiryDate, createDate, 45, 0.4);
 
         Store warehouse = new Warehouse();
         Store shop = new Shop();
@@ -69,8 +89,15 @@ public class ControlQualityTest {
     @Test
     public void foodTrashDistribution() {
         Calendar createDate = Calendar.getInstance();
-        createDate.set(createDate.get(Calendar.YEAR), createDate.get(Calendar.MONTH), createDate.get(Calendar.DAY_OF_MONTH) - 20, 0, 0);
-        Food food = new Sausage("Сосиськи", 15, createDate, 45, 0.4);
+        Calendar expiryDate = Calendar.getInstance();
+        createDate.set(createDate.get(Calendar.YEAR),
+                createDate.get(Calendar.MONTH),
+                createDate.get(Calendar.DAY_OF_MONTH) - 20, 0, 0);
+        expiryDate.set(expiryDate.get(Calendar.YEAR),
+                expiryDate.get(Calendar.MONTH),
+                expiryDate.get(Calendar.DAY_OF_MONTH) - 5, 0, 0);
+
+        Food food = new Sausage("Сосиски", expiryDate, createDate, 45, 0.4);
 
         Store warehouse = new Warehouse();
         Store shop = new Shop();

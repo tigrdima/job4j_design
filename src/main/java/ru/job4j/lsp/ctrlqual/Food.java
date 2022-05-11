@@ -5,12 +5,12 @@ import java.util.Calendar;
 public class Food {
 
     private String name;
-    private int expiryDate;
+    private Calendar expiryDate;
     private Calendar createDate;
     private double price;
     private double discount;
 
-    public Food(String name, int expiryDate, Calendar createDate, double price, double discount) {
+    public Food(String name, Calendar expiryDate, Calendar createDate, double price, double discount) {
         this.name = name;
         this.expiryDate = expiryDate;
         this.createDate = createDate;
@@ -26,11 +26,11 @@ public class Food {
         this.name = name;
     }
 
-    public int getExpiryDate() {
+    public Calendar getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(int expiryDate) {
+    public void setExpiryDate(Calendar expiryDate) {
             this.expiryDate = expiryDate;
     }
 

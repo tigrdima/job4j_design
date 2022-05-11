@@ -11,11 +11,9 @@ public interface Store {
     List<Food> getAll();
 
     default double analysis(Food food) {
-            Calendar now = Calendar.getInstance();
-            Calendar calendar = food.getCreateDate();
-            float l = now.getTimeInMillis();
-            float l1 = calendar.getTimeInMillis();
-            float rsl = (float) ((l - l1) / 9.074e+7);
-            return (rsl / food.getExpiryDate()) * 100;
+        double now = Calendar.getInstance().getTimeInMillis() - food.getCreateDate().getTimeInMillis();
+        double max = food.getExpiryDate().getTimeInMillis() - food.getCreateDate().getTimeInMillis();
+
+        return Math.rint((now / max) * 100);
     }
 }
