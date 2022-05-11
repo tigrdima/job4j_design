@@ -3,7 +3,6 @@ package ru.job4j.lsp;
 import org.junit.Test;
 import ru.job4j.lsp.ctrlqual.*;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -15,47 +14,73 @@ public class ControlQualityTest {
 
     @Test
     public void foodPriceChange() {
-        List<Food> foods = List.of(
-                new MilkFood("Колбаса", 10, new GregorianCalendar(2022, Calendar.MAY, 2), 450, 0.5)
-        );
+        Calendar createDate = Calendar.getInstance();
+        createDate.set(createDate.get(Calendar.YEAR), createDate.get(Calendar.MONTH), createDate.get(Calendar.DAY_OF_MONTH) - 9, 0, 0);
+        Food food = new MilkFood("Колбаса", 10, new GregorianCalendar(2022, Calendar.MAY, 2), 450, 0.5);
 
-        List<Store> stores = List.of(new Warehouse(), new Shop(), new Trash());
+        Store warehouse = new Warehouse();
+        Store shop = new Shop();
+        Store trash = new Trash();
+        List<Store> stores = List.of(warehouse, shop, trash);
+
         ControlQuality controlQuality = new ControlQuality(stores);
-        controlQuality.addStore(foods);
+        controlQuality.addStore(List.of(food));
 
-        double priceChange = stores.get(1).getAll().get(0).getPrice();
-        assertThat(priceChange, is(225.0));
+        assertThat(food.getPrice(), is(225.0));
     }
 
     @Test
-    public void foodDistribution() {
-        Food food = new Sausage("Колбаса", 10, new GregorianCalendar(2022, Calendar.MAY, 2), 450, 0.5);
-        Food food1 =  new MilkFood("Молоко", 4, new GregorianCalendar(2022, Calendar.MAY, 11), 20, 0.1);
-        Food food2 =  new Bread("Хлеб", 8, new GregorianCalendar(2022, Calendar.MAY, 8), 45, 0.4);
-        Food food3 = new Sausage("Сосиськи", 15, new GregorianCalendar(2022, Calendar.APRIL, 20), 45, 0.4);
+    public void foodWarehouseDistribution() {
+        Calendar createDate = Calendar.getInstance();
+        createDate.set(createDate.get(Calendar.YEAR), createDate.get(Calendar.MONTH), createDate.get(Calendar.DAY_OF_MONTH), 0, 0);
+        Food food = new MilkFood("Молоко", 4, createDate, 20, 0.1);
 
-        List<Food> warehouseList = List.of(food1);
-        List<Store> stores = List.of(new Warehouse(), new Shop(), new Trash());
-        ControlQuality warehouse = new ControlQuality(stores);
-        warehouse.addStore(warehouseList);
-        assertThat(warehouseList, is(stores.get(0).getAll()));
-        assertTrue(stores.get(1).getAll().isEmpty());
-        assertTrue(stores.get(2).getAll().isEmpty());
+        Store warehouse = new Warehouse();
+        Store shop = new Shop();
+        Store trash = new Trash();
+        List<Store> stores = List.of(warehouse, shop, trash);
 
-        List<Food> shopList = List.of(food, food2);
-        List<Store> stores2 = List.of(new Warehouse(), new Shop(), new Trash());
-        ControlQuality shop = new ControlQuality(stores2);
-        shop.addStore(shopList);
-        assertThat(shopList, is(stores2.get(1).getAll()));
-        assertTrue(stores2.get(0).getAll().isEmpty());
-        assertTrue(stores2.get(2).getAll().isEmpty());
+        ControlQuality controlQuality = new ControlQuality(stores);
+        controlQuality.addStore(List.of(food));
 
-        List<Food> trashList = List.of(food3);
-        List<Store> stores3 = List.of(new Warehouse(), new Shop(), new Trash());
-        ControlQuality trash = new ControlQuality(stores3);
-        trash.addStore(trashList);
-        assertThat(trashList, is(stores3.get(2).getAll()));
-        assertTrue(stores3.get(0).getAll().isEmpty());
-        assertTrue(stores3.get(1).getAll().isEmpty());
+        assertThat(food, is(warehouse.getAll().get(0)));
+        assertTrue(shop.getAll().isEmpty());
+        assertTrue(trash.getAll().isEmpty());
+    }
+
+    @Test
+    public void foodShopDistribution() {
+        Calendar createDate = Calendar.getInstance();
+        createDate.set(createDate.get(Calendar.YEAR), createDate.get(Calendar.MONTH), createDate.get(Calendar.DAY_OF_MONTH) - 3, 0, 0);
+        Food food = new Bread("Хлеб", 8, createDate, 45, 0.4);
+
+        Store warehouse = new Warehouse();
+        Store shop = new Shop();
+        Store trash = new Trash();
+        List<Store> stores = List.of(warehouse, shop, trash);
+
+        ControlQuality controlQuality = new ControlQuality(stores);
+        controlQuality.addStore(List.of(food));
+        assertThat(food, is(shop.getAll().get(0)));
+        assertTrue(warehouse.getAll().isEmpty());
+        assertTrue(trash.getAll().isEmpty());
+    }
+
+    @Test
+    public void foodTrashDistribution() {
+        Calendar createDate = Calendar.getInstance();
+        createDate.set(createDate.get(Calendar.YEAR), createDate.get(Calendar.MONTH), createDate.get(Calendar.DAY_OF_MONTH) - 20, 0, 0);
+        Food food = new Sausage("Сосиськи", 15, createDate, 45, 0.4);
+
+        Store warehouse = new Warehouse();
+        Store shop = new Shop();
+        Store trash = new Trash();
+        List<Store> stores = List.of(warehouse, shop, trash);
+
+        ControlQuality controlQuality = new ControlQuality(stores);
+        controlQuality.addStore(List.of(food));
+        assertThat(food, is(trash.getAll().get(0)));
+        assertTrue(shop.getAll().isEmpty());
+        assertTrue(warehouse.getAll().isEmpty());
     }
 }
