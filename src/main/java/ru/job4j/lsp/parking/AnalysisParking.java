@@ -2,24 +2,17 @@ package ru.job4j.lsp.parking;
 
 public class AnalysisParking implements AccountingParking {
 
-    Parking parking;
+    private Auto auto;
+    private Parking parking;
+    private String[] parkPlace;
 
-    public AnalysisParking(Parking parking) {
+    public AnalysisParking(Auto auto, Parking parking) {
+        this.auto = auto;
         this.parking = parking;
     }
 
     @Override
-    public boolean addCarParking(Car car) {
+    public boolean add(Auto auto) {
         return false;
-    }
-
-    @Override
-    public boolean park(Car car) {
-        return false;
-    }
-
-    @Override
-    public int spaceParkingPlace(Car car) {
-        return 0;
     }
 }
