@@ -1,11 +1,7 @@
 package ru.job4j.lsp.parking;
 
-public class Parking {
-    int numbersParkingPassCar;
-    int numberParkingCargoCar;
+public interface Parking {
 
-    public Parking(int numbersParkingPassCar, int numberParkingCargoCar) {
-        this.numbersParkingPassCar = numbersParkingPassCar;
-        this.numberParkingCargoCar = numberParkingCargoCar;
-    }
+    boolean add(Auto auto);
+
 }

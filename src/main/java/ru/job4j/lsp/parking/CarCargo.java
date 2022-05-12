@@ -2,15 +2,11 @@ package ru.job4j.lsp.parking;
 
 public class CarCargo implements Auto {
     private String name;
-    private int size;
+    private final int size;
 
-    public CarCargo(String name) {
+    public CarCargo(String name, int size) {
         this.name = name;
-    }
-
-    @Override
-    public void setSize() {
-        this.size = 2;
+        this.size = size;
     }
 
     @Override
@@ -21,10 +17,5 @@ public class CarCargo implements Auto {
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public boolean acceptPark(Parking parking) {
-        return false;
     }
 }
