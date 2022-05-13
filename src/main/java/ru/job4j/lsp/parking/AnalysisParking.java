@@ -1,15 +1,14 @@
 package ru.job4j.lsp.parking;
 
 public class AnalysisParking implements Parking {
-    int numbersParkingPassCar;
-    int numberParkingCargoCar;
-    private Auto auto;
-    private String[] parkPlace;
+    private final int numbersParkingPassCar;
+    private final int numberParkingCargoCar;
+    private final String[] parkPlace;
 
-    public AnalysisParking(int numbersParkingPassCar, int numberParkingCargoCar, Auto auto) {
+    public AnalysisParking(int numbersParkingPassCar, int numberParkingCargoCar) {
         this.numbersParkingPassCar = numbersParkingPassCar;
         this.numberParkingCargoCar = numberParkingCargoCar;
-        this.auto = auto;
+        this.parkPlace = new String[numberParkingCargoCar + numbersParkingPassCar];
     }
 
     @Override
