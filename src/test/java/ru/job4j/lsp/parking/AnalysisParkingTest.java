@@ -20,7 +20,7 @@ public class AnalysisParkingTest {
     }
 
     @Test
-    public void addFalseWhenNoPlace() {
+    public void addFalseWhenNotEnoughPlaces() {
         Auto auto1 = new CarPassenger("p1");
         Auto auto2 = new CarPassenger("p2");
         Auto auto3 = new CarCargo("c1", 2);
@@ -30,6 +30,21 @@ public class AnalysisParkingTest {
         assertTrue(parking.add(auto1));
         assertTrue(parking.add(auto2));
         assertTrue(parking.add(auto3));
+        assertFalse(parking.add(auto4));
+
+    }
+
+    @Test
+    public void addFalseWhenNoPlaces() {
+        Auto auto1 = new CarPassenger("p1");
+        Auto auto2 = new CarPassenger("p2");
+        Auto auto3 = new CarCargo("c1", 2);
+        Auto auto4 = new CarCargo("c2", 5);
+
+        AnalysisParking parking = new AnalysisParking(0, 0);
+        assertFalse(parking.add(auto1));
+        assertFalse(parking.add(auto2));
+        assertFalse(parking.add(auto3));
         assertFalse(parking.add(auto4));
 
     }

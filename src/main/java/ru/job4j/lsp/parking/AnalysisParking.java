@@ -1,18 +1,39 @@
 package ru.job4j.lsp.parking;
 
 public class AnalysisParking implements Parking {
-    private final int numbersParkingPassCar;
-    private final int numberParkingCargoCar;
-    private final String[] parkPlace;
+    private int numbersParkingPassCar;
+    private int numbersParkingCargoCar;
+    private final Auto[] autos;
+    private int numberAutoPlaces = 0;
 
-    public AnalysisParking(int numbersParkingPassCar, int numberParkingCargoCar) {
+    public AnalysisParking(int numbersParkingPassCar, int numbersParkingCargoCar) {
         this.numbersParkingPassCar = numbersParkingPassCar;
-        this.numberParkingCargoCar = numberParkingCargoCar;
-        this.parkPlace = new String[numberParkingCargoCar + numbersParkingPassCar];
+        this.numbersParkingCargoCar = numbersParkingCargoCar;
+        this.autos = new Auto[numbersParkingCargoCar + numbersParkingPassCar];
     }
 
     @Override
     public boolean add(Auto auto) {
-        return false;
+        boolean rsl = false;
+        int size = auto.getSize();
+
+        if (size == 1 && numbersParkingPassCar > 0) {
+            autos[numberAutoPlaces++] = auto;
+            numbersParkingPassCar--;
+            rsl = true;
+
+        } else if (size > 1 && numbersParkingCargoCar > 0) {
+                autos[numberAutoPlaces] = auto;
+                numberAutoPlaces = size;
+                numbersParkingCargoCar--;
+                rsl = true;
+
+            } else if (numbersParkingPassCar >= size) {
+                autos[numberAutoPlaces] = auto;
+                numberAutoPlaces = size;
+                numbersParkingPassCar -= size;
+                rsl = true;
+            }
+        return rsl;
     }
 }
