@@ -15,25 +15,30 @@ public class AnalysisParking implements Parking {
     @Override
     public boolean add(Auto auto) {
         boolean rsl = false;
-        int size = auto.getSize();
+        int sizeAuto = auto.getSize();
+        int minSizeAuto = CarPassenger.SIZE;
+        boolean freePlaces = autos.length - numberAutoPlaces >= minSizeAuto;
 
-        if (size == 1 && numbersParkingPassCar > 0) {
-            autos[numberAutoPlaces++] = auto;
-            numbersParkingPassCar--;
-            rsl = true;
-
-        } else if (size > 1 && numbersParkingCargoCar > 0) {
-                autos[numberAutoPlaces] = auto;
-                numberAutoPlaces = size;
-                numbersParkingCargoCar--;
+        if (freePlaces) {
+            if (sizeAuto == minSizeAuto && numbersParkingPassCar >= minSizeAuto) {
+                autos[numberAutoPlaces++] = auto;
+                numbersParkingPassCar--;
                 rsl = true;
 
-            } else if (numbersParkingPassCar >= size) {
-                autos[numberAutoPlaces] = auto;
-                numberAutoPlaces = size;
-                numbersParkingPassCar -= size;
-                rsl = true;
+            } else if (sizeAuto > minSizeAuto) {
+                if (numbersParkingCargoCar >= minSizeAuto) {
+                    autos[numberAutoPlaces++] = auto;
+                    numbersParkingCargoCar--;
+                    rsl = true;
+
+                } else if (numbersParkingPassCar >= sizeAuto) {
+                    autos[numberAutoPlaces] = auto;
+                    numberAutoPlaces += sizeAuto;
+                    numbersParkingPassCar -= sizeAuto;
+                    rsl = true;
+                }
             }
+        }
         return rsl;
     }
 }
