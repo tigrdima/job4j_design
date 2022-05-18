@@ -31,9 +31,8 @@ public class AnalysisParking implements Parking {
 
             } else if (sizeAuto > CarPassenger.SIZE && numbersParkingPassCar >= sizeAuto) {
                 for (int i = 0; i < sizeAuto; i++) {
-                    autos[numberAutoPlaces + i] = auto;
+                    autos[numberAutoPlaces++] = auto;
                 }
-                numberAutoPlaces += sizeAuto;
                 numbersParkingPassCar -= sizeAuto;
                 rsl = true;
             }
