@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class MaxMinTest {
 
     @Test
-    public void max() {
+    public void whenMin() {
         MaxMin<String> maxMin = new MaxMin<>();
         List<String> list = List.of(
                 "Иванов",
@@ -25,7 +25,7 @@ public class MaxMinTest {
     }
 
     @Test
-    public void min() {
+    public void whenMax() {
         MaxMin<Integer> maxMin = new MaxMin<>();
         List<Integer> list = List.of(8, 12, 7);
         Comparator<Integer> comparator = Integer::compareTo;
