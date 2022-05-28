@@ -1,9 +1,6 @@
 package ru.job4j.question;
 
 import org.junit.Test;
-import ru.job4j.question.Analize;
-import ru.job4j.question.Info;
-import ru.job4j.question.User;
 
 import java.util.Set;
 
